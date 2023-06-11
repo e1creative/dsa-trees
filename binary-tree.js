@@ -17,59 +17,170 @@ class BinaryTree {
    * the length of the shortest path from the root to a leaf. */
 
   minDepth() {
+    if (!this.root) return 0;
 
+    let possibleDepths = new Set();
+
+    function traverse(node = this.root, pathLength = 0) {
+      // path length defaults to 1 cause we are on a node to start with
+
+      pathLength = pathLength + 1;
+
+      if (node.left) traverse(node.left, pathLength);
+      if (node.right) traverse(node.right, pathLength);
+
+      // if there is no right or left, we hit a leaf and we can return our path length
+      if (!node.left && !node.right) possibleDepths.add(pathLength);
+    }
+
+    traverse(this.root);
+
+    const arr = Array.from(possibleDepths);
+
+    arr.sort();
+
+    return arr[0];
   }
 
   /** maxDepth(): return the maximum depth of the tree -- that is,
    * the length of the longest path from the root to a leaf. */
 
   maxDepth() {
+    if (!this.root) return 0;
 
+    let possibleDepths = new Set();
+
+    function traverse(node = this.root, pathLength = 0) {
+      // path length defaults to 1 cause we are on a node to start with
+
+      pathLength = pathLength + 1;
+
+      if (node.left) traverse(node.left, pathLength);
+      if (node.right) traverse(node.right, pathLength);
+
+      // if there is no right or left, we hit a leaf and we can return our path length
+      if (!node.left && !node.right) possibleDepths.add(pathLength);
+    }
+
+    traverse(this.root);
+
+    const arr = Array.from(possibleDepths);
+
+    arr.sort();
+
+    return arr[arr.length - 1];
   }
 
   /** maxSum(): return the maximum sum you can obtain by traveling along a path in the tree.
    * The path doesn't need to start at the root, but you can't visit a node more than once. */
 
   maxSum() {
+    if (!this.root) return 0;
 
+    let possibleSums = new Set();
+
+    function traverse(node = this.root, currentSum = 0) {
+      // path length defaults to 1 cause we are on a node to start with
+
+      currentSum = currentSum + node.val;
+
+      if (node.left) traverse(node.left, currentSum);
+      if (node.right) traverse(node.right, currentSum);
+
+      // if there is no right or left, we hit a leaf and we can return our path length
+      if (!node.left && !node.right) possibleSums.add(currentSum);
+    }
+
+    traverse(this.root);
+
+    const arr = Array.from(possibleSums);
+
+    console.log("possilbe sums: arr: ", arr);
+
+    arr.sort();
+
+    return arr[arr.length - 1];
   }
 
   /** nextLarger(lowerBound): return the smallest value in the tree
    * which is larger than lowerBound. Return null if no such value exists. */
 
   nextLarger(lowerBound) {
+    if (!this.root) return null;
 
+    const possibleVals = new Set();
+
+    function traverse(node = this.root) {
+      if (node.val > lowerBound) possibleVals.add(node.val);
+      if (node.left) traverse(node.left);
+      if (node.right) traverse(node.right);
+    }
+
+    traverse(this.root);
+
+    const arr = Array.from(possibleVals);
+
+    if (arr.length === 0) return null;
+
+    arr.sort();
+
+    return arr[0];
   }
 
   /** Further study!
    * areCousins(node1, node2): determine whether two nodes are cousins
    * (i.e. are at the same level but have different parents. ) */
 
-  areCousins(node1, node2) {
+  // areCousins(node1, node2) {
+  //   function traverse(node = this.root, pathLength = 0, min = null) {
+  //     console.log(node);
 
-  }
+  //     // if there is no right or left, we hit a leaf and we can return our path length
+  //     if (!node.left && !node.right) return pathLength;
+  //     if (node.left) traverse(node.left);
+  //     if (node.right) traverse(node.right);
+  //   }
+
+  //   return traverse(this.root);
+  // }
 
   /** Further study!
    * serialize(tree): serialize the BinaryTree object tree into a string. */
 
-  static serialize() {
+  // static serialize() {
+  //   function traverse(node = this.root, pathLength = 0, min = null) {
+  //     console.log(node);
 
-  }
+  //     // if there is no right or left, we hit a leaf and we can return our path length
+  //     if (!node.left && !node.right) return pathLength;
+  //     if (node.left) traverse(node.left);
+  //     if (node.right) traverse(node.right);
+  //   }
+
+  //   return traverse(this.root);
+  // }
 
   /** Further study!
    * deserialize(stringTree): deserialize stringTree into a BinaryTree object. */
 
-  static deserialize() {
+  // static deserialize() {
+  //   function traverse(node = this.root, pathLength = 0, min = null) {
+  //     console.log(node);
 
-  }
+  //     // if there is no right or left, we hit a leaf and we can return our path length
+  //     if (!node.left && !node.right) return pathLength;
+  //     if (node.left) traverse(node.left);
+  //     if (node.right) traverse(node.right);
+  //   }
+
+  //   return traverse(this.root);
+  // }
 
   /** Further study!
    * lowestCommonAncestor(node1, node2): find the lowest common ancestor
    * of two nodes in a binary tree. */
 
-  lowestCommonAncestor(node1, node2) {
-    
-  }
+  // lowestCommonAncestor(node1, node2) {}
 }
 
 module.exports = { BinaryTree, BinaryTreeNode };
